@@ -3,14 +3,43 @@ import "./DisplayInfor.scss";
 import logo from "./../logo.svg";
 
 class DisplayInfor extends React.Component {
-  state = {
-    isDisplayable: true,
-  };
+  constructor(props) {
+    console.log("call -> constructor");
+    super(props);
+    //babel compiler
+    this.state = {
+      isDisplayable: true,
+    };
+  }
+
+  componentDidMount() {
+    console.log("call -> componentDidMount");
+    setTimeout(() => {
+      document.title = "Did mount";
+    }, 5000);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(
+      "call -> componentDidUpdate",
+      this.props,
+      prevProps,
+      prevState,
+      snapshot
+    );
+    //buộc so sánh giá trị cũ và mới
+    if (this.props.listUsers !== prevProps.listUsers) {
+      if (this.props.listUsers.length === 5) {
+        alert("You have 5 users");
+      }
+    }
+  }
 
   handleShowHideListEvent = () => {
     this.setState({ isDisplayable: !this.state.isDisplayable });
   };
   render() {
+    console.log("call -> render");
     const { listUsers } = this.props;
     return (
       <div className="display-infor-container">
