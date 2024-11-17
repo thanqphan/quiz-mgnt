@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./DisplayInfor.scss";
 import logo from "./../logo.svg";
 
@@ -40,6 +40,15 @@ const DisplayInfor = (props) => {
   const handleHideShowListUser = () => {
     setDisplayState(!displayState);
   };
+
+  //useEffect
+  useEffect(() => {
+    if (listUsers.length === 0) {
+      alert("You already deleted this list");
+    }
+    console.log(" call->useEffect ");
+  }, [listUsers]);
+
   return (
     <div className="display-infor-container">
       <div>
@@ -49,7 +58,7 @@ const DisplayInfor = (props) => {
       </div>
       {displayState && (
         <>
-          {listUsers.map((user) => {
+          {listUsers.map((user, index) => {
             return (
               <div key={user.id} className={user.age > 18 ? "green" : "red"}>
                 <div>My name is {user.name}</div>

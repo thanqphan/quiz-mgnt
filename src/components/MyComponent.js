@@ -42,10 +42,10 @@ import DisplayInfor from "./DisplayInfor";
 
 const MyComponent = (props) => {
   const [listUsersState, setListUsersState] = useState([
-    { id: 1, name: "Thang", age: 22 },
-    { id: 2, name: "Anh", age: 12 },
-    { id: 3, name: "Phan", age: 32 },
-    { id: 4, name: "Louis", age: 27 },
+    { id: 1, name: "Thang", age: "22" },
+    { id: 2, name: "Anh", age: "12" },
+    { id: 3, name: "Phan", age: "32" },
+    { id: 4, name: "Louis", age: "27" },
   ]);
 
   const handleAddUserEvent = (object) => {
@@ -55,7 +55,7 @@ const MyComponent = (props) => {
   const handleDeleteUserEvent = (userId) => {
     let listUsersCLone = listUsersState;
     listUsersCLone = listUsersCLone.filter((user) => user.id !== userId);
-    setListUsersState({ listUsersCLone });
+    setListUsersState(listUsersCLone);
   };
 
   return (
