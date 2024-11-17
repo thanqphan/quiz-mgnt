@@ -44,7 +44,7 @@ const DisplayInfor = (props) => {
     <div className="display-infor-container">
       <div>
         <button onClick={() => handleHideShowListUser()}>
-          {displayState === true ? "Hide listUsers" : "Show listUsers"}
+          {displayState === true ? "Hide list users" : "Show list users"}
         </button>
       </div>
       {displayState && (
