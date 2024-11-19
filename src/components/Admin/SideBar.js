@@ -18,6 +18,7 @@ import {
 } from "react-icons/fa";
 import sidebarBg from "../../assets/bg2.jpg";
 import { MdDashboard, MdQuiz } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
   //   const { image, collapsed, toggled, handleToggleSidebar } = props;
@@ -50,22 +51,17 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
 
         <SidebarContent>
           <Menu iconShape="circle">
-            <MenuItem
-              icon={<MdDashboard />}
-              //   suffix={<span className="badge red">New</span>}
-            >
+            <MenuItem icon={<MdDashboard />}>
               Dashboard
+              <Link to="/admins"></Link>
             </MenuItem>
-            {/* <MenuItem icon={<FaGem />}>Component</MenuItem> */}
           </Menu>
           <Menu iconShape="circle">
-            <SubMenu
-              //   suffix={<span className="badge yellow">3</span>}
-              //   icon={<FaRegLaughWink />}
-              icon={<FaGem />}
-              title="Features"
-            >
-              <MenuItem> User management</MenuItem>
+            <SubMenu icon={<FaGem />} title="Features">
+              <MenuItem>
+                User management
+                <Link to="/admins/user-management"></Link>
+              </MenuItem>
               <MenuItem> Quiz management</MenuItem>
               <MenuItem> Question management</MenuItem>
             </SubMenu>
