@@ -93,7 +93,7 @@ const SideBar = ({ image, collapsed, toggled, handleToggleSidebar }) => {
                   overflow: "hidden",
                 }}
               >
-                View source{" "}
+                View source
               </span>
             </a>
           </div>
