@@ -2,9 +2,10 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { PiUploadSimple } from "react-icons/pi";
+import axios from "axios";
 
-const ModelNewUser = () => {
-  const [show, setShow] = useState(false);
+const ModelNewUser = (props) => {
+  const { show, setShow } = props;
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -13,7 +14,15 @@ const ModelNewUser = () => {
   const [image, setImage] = useState("");
   const [previewImage, setPreviewImage] = useState("");
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setUsername("");
+    setEmail("");
+    setRole("");
+    setPassword("");
+    setImage("");
+    setPreviewImage("");
+  };
   const handleShow = () => setShow(true);
 
   const handleUploadImage = (event) => {
@@ -21,11 +30,25 @@ const ModelNewUser = () => {
     setImage(event.target.files[0]);
   };
 
+  const handleSubmitCreateUser = async () => {
+    const data = new FormData();
+    data.append("email", email);
+    data.append("password", password);
+    data.append("username", username);
+    data.append("role", role);
+    data.append("userImage", image);
+
+    let res = await axios.post(
+      "http://localhost:8081/api/v1/participant",
+      data
+    );
+  };
+
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
-      </Button>
+      </Button> */}
 
       <Modal
         show={show}
@@ -114,7 +137,7 @@ const ModelNewUser = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmitCreateUser}>
             Save Changes
           </Button>
         </Modal.Footer>

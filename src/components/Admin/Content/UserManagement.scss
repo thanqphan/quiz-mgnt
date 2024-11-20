@@ -1,6 +1,17 @@
 .user-management-container{
+    padding: 10px;
     .user-management-content{
-        
+        .btn-add-user{
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+
+    }
+    .title{
+        font-size: 30px;
+        font-weight: 500;
     }
 }
 .model-add-user{
