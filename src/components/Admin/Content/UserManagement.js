@@ -1,4 +1,5 @@
 import ModelAddNewUser from "./ModelAddNewUser";
+import "./UserManagement.scss";
 
 const UserManagement = (props) => {
   return (
