@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import { PiUploadSimple } from "react-icons/pi";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { postCreateUser } from "../../../services/apiServices";
 
 const ModelNewUser = (props) => {
   const { show, setShow } = props;
@@ -46,23 +47,18 @@ const ModelNewUser = (props) => {
       return;
     }
 
-    const data = new FormData();
-    data.append("email", email);
-    data.append("password", password);
-    data.append("username", username);
-    data.append("role", role);
-    data.append("userImage", image);
+    if (!password) {
+      toast.error("Invalid password");
+      return;
+    }
 
-    let res = await axios.post(
-      "http://localhost:8081/api/v1/participant",
-      data
-    );
+    let data = await postCreateUser(email, password, username, role, image);
 
-    if (res.data && res.data.EC === 0) {
-      toast.success(res.data.EM);
+    if (data && data.EC === 0) {
+      toast.success(data.EM);
       handleClose();
     } else {
-      toast.error(res.data.EM);
+      toast.error(data.EM);
     }
   };
 
