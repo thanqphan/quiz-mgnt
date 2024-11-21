@@ -5,18 +5,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { PiTrash } from "react-icons/pi";
 
 const UserTable = (props) => {
-  const [listUsers, setListUsers] = useState();
-
-  useEffect(() => {
-    fetchListUsers();
-  }, []);
-
-  const fetchListUsers = async () => {
-    let res = await getAllUsers();
-    if (res && res.EC === 0) {
-      setListUsers(res.DT);
-    }
-  };
+  const { listUsers } = props;
 
   return (
     <>
