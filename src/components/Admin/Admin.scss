@@ -6,7 +6,8 @@
         }
     }
     .admin-content{
-        width: 100vh;
+        width: -webkit-fill-available;
+    
         .admin-header{
             height: 40px;
         }

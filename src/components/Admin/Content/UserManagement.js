@@ -2,6 +2,7 @@ import { useState } from "react";
 import ModalAddNewUser from "./ModalAddNewUser";
 import "./UserManagement.scss";
 import { CiCirclePlus } from "react-icons/ci";
+import UserTable from "./UserTable";
 
 const UserManagement = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
@@ -21,7 +22,9 @@ const UserManagement = (props) => {
             Add New User
           </button>
         </div>
-        <div className="tbl-users-container">Table content</div>
+        <div className="tbl-users-container">
+          <UserTable />
+        </div>
         <ModalAddNewUser
           show={showModalCreateUser}
           setShow={setShowModalCreateUser}
