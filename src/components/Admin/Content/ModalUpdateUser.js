@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { PiUploadSimple } from "react-icons/pi";
 import { toast } from "react-toastify";
-import { postCreateUser } from "../../../services/apiServices";
+import { putUpdateUser } from "../../../services/apiServices";
 import _ from "lodash";
 
 const ModalUpdateUser = (props) => {
@@ -24,6 +24,7 @@ const ModalUpdateUser = (props) => {
     setPassword("");
     setImage("");
     setPreviewImage("");
+    props.resetUserDataUpdate();
   };
   const handleShow = () => setShow(true);
 
@@ -32,27 +33,8 @@ const ModalUpdateUser = (props) => {
     setImage(event.target.files[0]);
   };
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
   const handleSubmitCreateUser = async () => {
-    const isValidEmail = validateEmail(email);
-    if (!isValidEmail) {
-      toast.error("Invalid email");
-      return;
-    }
-
-    if (!password) {
-      toast.error("Invalid password");
-      return;
-    }
-
-    let data = await postCreateUser(email, password, username, role, image);
+    let data = await putUpdateUser(userDataUpdate.id, username, role, image);
 
     if (data && data.EC === 0) {
       toast.success(data.EM);
