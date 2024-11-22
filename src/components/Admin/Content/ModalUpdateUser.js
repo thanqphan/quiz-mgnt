@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { PiUploadSimple } from "react-icons/pi";
 import { toast } from "react-toastify";
 import { postCreateUser } from "../../../services/apiServices";
+import _ from "lodash";
 
-const ModalNewUser = (props) => {
-  const { show, setShow } = props;
+const ModalUpdateUser = (props) => {
+  const { show, setShow, userDataUpdate } = props;
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -62,6 +63,20 @@ const ModalNewUser = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (!_.isEmpty(userDataUpdate)) {
+      setUsername(userDataUpdate.username);
+      setEmail(userDataUpdate.email);
+      setRole(userDataUpdate.role);
+      setImage("");
+      setPreviewImage(
+        userDataUpdate.image
+          ? `data:image/jpeg;base64,${userDataUpdate.image}`
+          : ""
+      );
+    }
+  }, [props.userDataUpdate]);
+
   return (
     <>
       {/* <Button variant="primary" onClick={handleShow}>
@@ -76,7 +91,7 @@ const ModalNewUser = (props) => {
         className="model-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add New User</Modal.Title>
+          <Modal.Title>Update A User</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -87,6 +102,7 @@ const ModalNewUser = (props) => {
                   type="email"
                   className="form-control"
                   placeholder="Email"
+                  disabled
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
                 />
@@ -96,7 +112,8 @@ const ModalNewUser = (props) => {
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Password"
+                  placeholder="********"
+                  disabled
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                 />
@@ -164,4 +181,4 @@ const ModalNewUser = (props) => {
   );
 };
 
-export default ModalNewUser;
+export default ModalUpdateUser;

@@ -33,7 +33,9 @@ const UserTable = (props) => {
                     <button className="btn btn-info">
                       <IoEyeSharp />
                     </button>
-                    <button className="btn btn-warning mx-3">
+                    <button className="btn btn-warning mx-3"
+                    onClick={()=>{props.handleClickBtnUpdateUser(user)}}
+                    >
                       <BiEditAlt />
                     </button>
                     <button className="btn btn-danger">

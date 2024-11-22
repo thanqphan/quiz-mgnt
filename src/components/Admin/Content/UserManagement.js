@@ -4,10 +4,13 @@ import "./UserManagement.scss";
 import { CiCirclePlus } from "react-icons/ci";
 import UserTable from "./UserTable";
 import { getAllUsers } from "../../../services/apiServices";
+import ModalUpdateUser from "./ModalUpdateUser";
 
 const UserManagement = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
-
+  const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
+  //user being chosen to update
+  const [userDataUpdate, setUserDataUpdate] = useState({});
   const [listUsers, setListUsers] = useState();
 
   useEffect(() => {
@@ -19,6 +22,11 @@ const UserManagement = (props) => {
     if (res && res.EC === 0) {
       setListUsers(res.DT);
     }
+  };
+
+  const handleClickBtnUpdateUser = (user) => {
+    setShowModalUpdateUser(true);
+    setUserDataUpdate(user);
   };
 
   return (
@@ -37,12 +45,20 @@ const UserManagement = (props) => {
           </button>
         </div>
         <div className="tbl-users-container">
-          <UserTable listUsers={listUsers} />
+          <UserTable
+            listUsers={listUsers}
+            handleClickBtnUpdateUser={handleClickBtnUpdateUser}
+          />
         </div>
         <ModalAddNewUser
           show={showModalCreateUser}
           setShow={setShowModalCreateUser}
           fetchListUsers={fetchListUsers}
+        />
+        <ModalUpdateUser
+          show={showModalUpdateUser}
+          setShow={setShowModalUpdateUser}
+          userDataUpdate={userDataUpdate}
         />
       </div>
     </div>
