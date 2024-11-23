@@ -30,7 +30,8 @@ const UserTable = (props) => {
                   <td>{user.username}</td>
                   <td>{user.role}</td>
                   <td>
-                    <button className="btn btn-info">
+                    <button className="btn btn-info"
+                    onClick={()=>{props.handleClickBtnDetailsUser(user)}}>
                       <IoEyeSharp />
                     </button>
                     <button className="btn btn-warning mx-3"
@@ -38,7 +39,8 @@ const UserTable = (props) => {
                     >
                       <BiEditAlt />
                     </button>
-                    <button className="btn btn-danger">
+                    <button className="btn btn-danger"
+                    onClick={()=>{props.handleClickBtnDeleteUser(user)}}>
                       <PiTrash />
                     </button>
                   </td>

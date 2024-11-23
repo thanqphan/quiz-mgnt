@@ -5,12 +5,16 @@ import { CiCirclePlus } from "react-icons/ci";
 import UserTable from "./UserTable";
 import { getAllUsers } from "../../../services/apiServices";
 import ModalUpdateUser from "./ModalUpdateUser";
+import ModalDetailsUser from "./ModalDetailsUser";
+import ModalDeleteUser from "./ModalDeleteUser";
 
 const UserManagement = (props) => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
   const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
+  const [showModalDetailsUser, setShowModalDetailsUser] = useState(false);
+  const [showModalDeletesUser, setShowModalDeleteUser] = useState(false);
   //user being chosen to update
-  const [userDataUpdate, setUserDataUpdate] = useState({});
+  const [selectedUserData, setselectedUserData] = useState({});
   const [listUsers, setListUsers] = useState();
 
   useEffect(() => {
@@ -26,11 +30,19 @@ const UserManagement = (props) => {
 
   const handleClickBtnUpdateUser = (user) => {
     setShowModalUpdateUser(true);
-    setUserDataUpdate(user);
+    setselectedUserData(user);
+  };
+  const handleClickBtnDetailsUser = (user) => {
+    setShowModalDetailsUser(true);
+    setselectedUserData(user);
+  };
+  const handleClickBtnDeleteUser = (user) => {
+    setShowModalDeleteUser(true);
+    setselectedUserData(user);
   };
 
-  const resetUserDataUpdate = () => {
-    setUserDataUpdate({});
+  const resetselectedUserData = () => {
+    setselectedUserData({});
   };
 
   return (
@@ -52,6 +64,8 @@ const UserManagement = (props) => {
           <UserTable
             listUsers={listUsers}
             handleClickBtnUpdateUser={handleClickBtnUpdateUser}
+            handleClickBtnDetailsUser={handleClickBtnDetailsUser}
+            handleClickBtnDeleteUser={handleClickBtnDeleteUser}
           />
         </div>
         <ModalAddNewUser
@@ -62,9 +76,22 @@ const UserManagement = (props) => {
         <ModalUpdateUser
           show={showModalUpdateUser}
           setShow={setShowModalUpdateUser}
-          userDataUpdate={userDataUpdate}
+          selectedUserData={selectedUserData}
           fetchListUsers={fetchListUsers}
-          resetUserDataUpdate={resetUserDataUpdate}
+          resetselectedUserData={resetselectedUserData}
+        />
+        <ModalDetailsUser
+          show={showModalDetailsUser}
+          setShow={setShowModalDetailsUser}
+          selectedUserData={selectedUserData}
+          fetchListUsers={fetchListUsers}
+          resetselectedUserData={resetselectedUserData}
+        />
+        <ModalDeleteUser
+          show={showModalDeletesUser}
+          setShow={setShowModalDeleteUser}
+          selectedUserData={selectedUserData}
+          fetchListUsers={fetchListUsers}
         />
       </div>
     </div>

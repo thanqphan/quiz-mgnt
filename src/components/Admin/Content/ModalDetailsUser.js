@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { PiUploadSimple } from "react-icons/pi";
-import { toast } from "react-toastify";
-import { putUpdateUser } from "../../../services/apiServices";
 import _ from "lodash";
 
-const ModalUpdateUser = (props) => {
+const ModalDetailsUser = (props) => {
   const { show, setShow, selectedUserData } = props;
 
   const [username, setUsername] = useState("");
@@ -27,24 +25,6 @@ const ModalUpdateUser = (props) => {
     props.resetselectedUserData();
   };
   const handleShow = () => setShow(true);
-
-  const handleUploadImage = (event) => {
-    setPreviewImage(URL.createObjectURL(event.target.files[0]));
-    setImage(event.target.files[0]);
-  };
-
-  const handleSubmitCreateUser = async () => {
-    let data = await putUpdateUser(selectedUserData.id, username, role, image);
-
-    if (data && data.EC === 0) {
-      toast.success(data.EM);
-      handleClose();
-      await props.fetchListUsers();
-    } else {
-      toast.error(data.EM);
-    }
-  };
-
   useEffect(() => {
     if (!_.isEmpty(selectedUserData)) {
       setUsername(selectedUserData.username);
@@ -73,7 +53,7 @@ const ModalUpdateUser = (props) => {
         className="model-add-user"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Update A User</Modal.Title>
+          <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -106,6 +86,7 @@ const ModalUpdateUser = (props) => {
                   type="text"
                   className="form-control"
                   placeholder="Username"
+                  disabled
                   value={username}
                   onChange={(event) => setUsername(event.target.value)}
                 />
@@ -117,6 +98,7 @@ const ModalUpdateUser = (props) => {
                 <select
                   id="inputRole"
                   className="form-control"
+                  disabled
                   onChange={(event) => setRole(event.target.value)}
                 >
                   <option value={"USER"}>User</option>
@@ -125,7 +107,7 @@ const ModalUpdateUser = (props) => {
               </div>
             </div>
             <div className="form-row">
-              <div className="form-group col-md-12">
+              <div className="form-group col-md-12" hidden>
                 <label
                   className="form-label label-upload"
                   htmlFor="uploadImage"
@@ -133,12 +115,7 @@ const ModalUpdateUser = (props) => {
                   <PiUploadSimple />
                   Upload File Image
                 </label>
-                <input
-                  type="file"
-                  hidden
-                  id="uploadImage"
-                  onChange={(event) => handleUploadImage(event)}
-                ></input>
+                <input type="file" hidden id="uploadImage"></input>
               </div>
               <div className="col-md-12 img-preview">
                 {previewImage ? (
@@ -154,13 +131,10 @@ const ModalUpdateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmitCreateUser}>
-            Save Changes
-          </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export default ModalUpdateUser;
+export default ModalDetailsUser;
