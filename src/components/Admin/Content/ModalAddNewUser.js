@@ -55,8 +55,9 @@ const ModalNewUser = (props) => {
 
     if (data && data.EC === 0) {
       toast.success(data.EM);
-      handleClose();
-      await props.fetchListUsers();
+
+      props.setCurrentPage(1);
+      await props.fetchListUsers(1);
     } else {
       toast.error(data.EM);
     }
