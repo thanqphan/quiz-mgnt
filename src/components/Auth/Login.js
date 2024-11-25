@@ -1,15 +1,34 @@
 import { useState } from "react";
 import "./Login.scss";
-const Login = () => {
+import { useNavigate } from "react-router-dom";
+import { postLogin } from "../../services/apiServices";
+import { toast, ToastContainer } from "react-toastify";
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    alert("Login");
+  const handleLogin = async () => {
+    let data = await postLogin(email, password);
+
+    if (data && data.EC === 0) {
+      toast.success(data.EM);
+    } else {
+      toast.error(data.EM);
+    }
   };
+  const handleForgotPassword = () => {
+    navigate("/forgot-password");
+  };
+  // const handleBackToHomePage = () => {
+  //   navigate("/");
+  // };
   return (
     <div className="login-container">
-      <div className="login-header">Don't have an account yet?</div>
+      <div className="login-header">
+        <span>Don't have an account yet?</span>
+        <button className="btn btn-sign-in">Sign in</button>
+      </div>
       <div className="login-title col-4 mx-auto">React tutorial</div>
       <div className="login-welcome col-4 mx-auto">Hi! Who's this DIVA?</div>
       <div className="login-content-form col-4 mx-auto">
@@ -37,7 +56,14 @@ const Login = () => {
             }}
           ></input>
         </div>
-        <span className="forgot-password">Forgot your password?</span>
+        <span
+          className="forgot-password"
+          onClick={() => {
+            handleForgotPassword();
+          }}
+        >
+          Forgot your password?
+        </span>
         <div>
           <button
             className="btn btn-submit justify-content-center"
@@ -48,6 +74,14 @@ const Login = () => {
             Log in
           </button>
         </div>
+        <span
+          className="forgot-password"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Back to home page
+        </span>
       </div>
     </div>
   );

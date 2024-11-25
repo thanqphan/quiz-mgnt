@@ -1,7 +1,17 @@
 .login-container{
     .login-header{
-        text-align: right;
         margin: 10px 15px;
+        height: 35px;
+        gap: 10px;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        .btn-sign-in{
+            border: 1px solid black;
+            border-radius: 10px;
+            border-color: black;
+            margin-right: 15px;
+        }
     }
     .login-title{
         font-size: 30px;
@@ -30,5 +40,6 @@
                 background: black !important;
             }
         }
+        
     }
 }
