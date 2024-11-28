@@ -8,6 +8,7 @@ import Login from "./components/Auth/Login";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Signin from "./components/Auth/Register";
 
 const Layout = () => {
   return (
@@ -26,6 +27,7 @@ const Layout = () => {
           />
         </Route>
         <Route path="/login" element={<Login></Login>} />
+        <Route path="/register" element={<Signin></Signin>} />
       </Routes>
 
       <ToastContainer
