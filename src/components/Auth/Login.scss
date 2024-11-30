@@ -24,6 +24,21 @@
         gap: 10px;
         display: flex;
         flex-direction: column;
+        .loading-icon{
+            margin: 10px;
+            top: 2px;
+            animation: spin 1s infinite linear;
+        }
+        
+        @keyframes spin {
+            from {
+                transform: scale(1) rotate(0deg);
+            }
+            to {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+    
         .forgot-password{
             text-align: right;
             text-decoration: underline
@@ -38,6 +53,13 @@
             height: 40px;
             &:hover{
                 background: black !important;
+            }
+
+            &:disabled{
+                border: 1px solid #999999;
+                background-color: #cccccc;
+                color: #666666;
+                cursor: wait;
             }
         }
         

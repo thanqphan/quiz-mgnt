@@ -5,21 +5,27 @@ import { postLogin } from "../../services/apiServices";
 import { toast, ToastContainer } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [delay, setDelay] = useState(3000);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
-    let data = await postLogin(email, password);
+    setIsLoading(true);
+    let data = await postLogin(email, password, delay);
 
     if (data && data.EC === 0) {
       dispatch(doLogin(data));
       toast.success(data.EM);
+      setIsLoading(false);
       navigate("/");
     } else {
       toast.error(data.EM);
+      setIsLoading(false);
     }
   };
   const handleForgotPassword = () => {
@@ -82,8 +88,12 @@ const Login = (props) => {
             onClick={() => {
               handleLogin();
             }}
+            disabled={isLoading}
           >
-            Log in
+            {isLoading ? (
+              <AiOutlineLoading3Quarters className="loading-icon" />
+            ) : null}
+            <span>Log in</span>
           </button>
         </div>
         <span
