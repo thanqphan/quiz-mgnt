@@ -7,15 +7,16 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 import "nprogress/nprogress.css";
+import { PersistGate } from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    {/* <React.StrictMode> */}
-    <BrowserRouter>
-      <Layout />
-    </BrowserRouter>
-    {/* </React.StrictMode> */}
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 );
 
