@@ -10,7 +10,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Signin from "./components/Auth/Register";
 import ListQuiz from "./components/User/ListQuiz";
+import QuizDetails from "./components/User/QuizDetails";
 
+const NotFound = () => {
+  return <div className="alert alert-danger container m-3">Not Found</div>;
+};
 const Layout = () => {
   return (
     <>
@@ -20,6 +24,7 @@ const Layout = () => {
           <Route index element={<HomePage></HomePage>} />
           <Route path="users" element={<ListQuiz></ListQuiz>} />
         </Route>
+        <Route path="/quiz/:id" element={<QuizDetails></QuizDetails>} />
         <Route path="/admins" element={<Admin></Admin>}>
           <Route index element={<DashBroad></DashBroad>} />
           <Route
@@ -29,6 +34,7 @@ const Layout = () => {
         </Route>
         <Route path="/login" element={<Login></Login>} />
         <Route path="/register" element={<Signin></Signin>} />
+        <Route path="*" element={<NotFound></NotFound>} />
       </Routes>
 
       <ToastContainer
