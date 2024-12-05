@@ -13,11 +13,18 @@
 
         }
         .quiz.content{
+            .quiz-image{
+                img{
+                    width: 300px;
+                    height: 200px;
+                }
+            }
             .quiz-question{
                 font-size: larger;
                 font-weight: 500;
             }
             .quiz-answer{
+                
 
             }
         }
