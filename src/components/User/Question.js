@@ -3,15 +3,21 @@ import "./QuizDetails.scss";
 
 const Question = (props) => {
   const { data, index } = props;
+  const handleCheckCheckBox = (event, aId, qId) => {
+    props.handleCheckBox(aId, qId);
+  };
+
   if (_.isEmpty(data)) {
     return <></>;
   }
   return (
     <>
-      {data.image && (
+      {data.image ? (
         <div className="question-image">
           <img src={`data:image/jpeg;base64,${data.image}`} />
         </div>
+      ) : (
+        <div className="question-image"></div>
       )}
       <div className="quiz-question">
         Question {index + 1}: {data.questionDescription}
@@ -22,14 +28,21 @@ const Question = (props) => {
           data.answers.map((answer, index) => {
             return (
               <div key={`answer-${index}`} className="quiz-answer-child">
-                <div class="form-check">
+                <div className="form-check">
                   <input
-                    class="form-check-input"
+                    className="form-check-input"
                     type="checkbox"
                     value=""
                     id="flexCheckDefault"
+                    onChange={(event) => {
+                      handleCheckCheckBox(event, answer.id, data.questionId);
+                    }}
+                    checked={answer.isSelected}
                   />
-                  <label class="form-check-label" for="flexCheckDefault">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefault"
+                  >
                     {answer.description}
                   </label>
                 </div>
