@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Signin from "./components/Auth/Register";
 import ListQuiz from "./components/User/ListQuiz";
 import QuizDetails from "./components/User/QuizDetails";
-
+import QuizManagement from "./components/Admin/Content/Quiz/QuizManagement";
 const NotFound = () => {
   return <div className="alert alert-danger container m-3">Not Found</div>;
 };
@@ -30,6 +30,10 @@ const Layout = () => {
           <Route
             path="user-management"
             element={<UserManagement></UserManagement>}
+          />
+          <Route
+            path="quiz-management"
+            element={<QuizManagement></QuizManagement>}
           />
         </Route>
         <Route path="/login" element={<Login></Login>} />
