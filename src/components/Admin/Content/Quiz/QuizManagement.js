@@ -1,14 +1,40 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./QuizManagement.scss";
 import Select from "react-select";
+import { postCreateQuiz } from "../../../../services/apiServices";
+import { toast } from "react-toastify";
 
 const QuizManagement = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [type, setType] = useState("EASY");
+  const [type, setType] = useState("");
   const [image, setImage] = useState(null);
+  const fileInputRef = useRef(null);
 
-  const handleUploadImage = (event) => {};
+  const handleUploadImage = (event) => {
+    setImage(event.target.files[0]);
+  };
+
+  const handleCreateNewQuiz = async () => {
+    if (!name || !description) {
+      toast.error("Please enter Name and Description");
+      return;
+    }
+    let res = await postCreateQuiz(description, name, type?.value, image);
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      setName("");
+      setDescription("");
+      setType("");
+
+      // Reset input file
+      if (fileInputRef.current) {
+        fileInputRef.current.value = null;
+      }
+    } else {
+      toast.error(res.EM);
+    }
+  };
 
   const options = [
     { value: "EASY", label: "Easy" },
@@ -44,8 +70,10 @@ const QuizManagement = (props) => {
           </div>
           <div className="my-3">
             <Select
+              placeholder="Quiz Type..."
               value={type}
-              // onChange={this.handleChange}
+              defaultValue={type}
+              onChange={setType}
               options={options}
             />
           </div>
@@ -57,7 +85,19 @@ const QuizManagement = (props) => {
               onChange={(event) => {
                 handleUploadImage(event);
               }}
+              ref={fileInputRef}
             ></input>
+          </div>
+          <div className="mt-3">
+            <button
+              type="submit"
+              className="btn btn-warning"
+              onClick={() => {
+                handleCreateNewQuiz();
+              }}
+            >
+              Save
+            </button>
           </div>
         </fieldset>
       </div>
