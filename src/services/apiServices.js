@@ -53,6 +53,9 @@ const postCreateQuiz = (description, name, difficulty, image) => {
 
   return axios.post("api/v1/quiz", data);
 };
+const getAllQuiz = () => {
+  return axios.get("/api/v1/quiz/all");
+};
 
 export {
   postCreateUser,
@@ -66,4 +69,5 @@ export {
   getQuestionByQuiz,
   postQuizSubmit,
   postCreateQuiz,
+  getAllQuiz,
 };
