@@ -1,20 +1,54 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./QuizManagement.scss";
 import Select from "react-select";
-import { postCreateQuiz } from "../../../../services/apiServices";
+import { getAllQuiz, postCreateQuiz } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
 import QuizTable from "./QuizTable";
 import { Accordion } from "react-bootstrap";
+import ModalUpdateQuiz from "./ModalUpdateQuiz";
+import ModalDeleteQuiz from "./ModalDeleteQuiz";
 
 const QuizManagement = (props) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [image, setImage] = useState(null);
-  const fileInputRef = useRef(null);
+  const [listQuizzes, setListQuizzes] = useState([]);
 
+  const [showModalUpdateQuiz, setShowModalUpdateQuiz] = useState(false);
+  const [showModalDeleteQuiz, setShowModalDeleteQuiz] = useState(false);
+  const [selectedQuizData, setselectedQuizData] = useState({});
+
+  //set input tag value selected
+  const fileInputRef = useRef(null);
   const handleUploadImage = (event) => {
     setImage(event.target.files[0]);
+  };
+
+  useEffect(() => {
+    fetchListQuizzes();
+  }, []);
+
+  const fetchListQuizzes = async () => {
+    let res = await getAllQuiz();
+    if (res && res.EC === 0) {
+      setListQuizzes(res.DT);
+    } else {
+      toast.error(res.EM);
+    }
+  };
+
+  const handleClickBtnUpdateQuiz = (user) => {
+    setShowModalUpdateQuiz(true);
+    setselectedQuizData(user);
+  };
+  const handleClickBtnDeleteQuiz = (user) => {
+    setShowModalDeleteQuiz(true);
+    setselectedQuizData(user);
+  };
+
+  const resetselectedQuizData = () => {
+    setselectedQuizData({});
   };
 
   const handleCreateNewQuiz = async () => {
@@ -25,6 +59,7 @@ const QuizManagement = (props) => {
     let res = await postCreateQuiz(description, name, type?.value, image);
     if (res && res.EC === 0) {
       toast.success(res.EM);
+
       setName("");
       setDescription("");
       setType("");
@@ -33,6 +68,8 @@ const QuizManagement = (props) => {
       if (fileInputRef.current) {
         fileInputRef.current.value = null;
       }
+
+      fetchListQuizzes();
     } else {
       toast.error(res.EM);
     }
@@ -110,7 +147,26 @@ const QuizManagement = (props) => {
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      <QuizTable />
+      <div className="tbl-quiz-container">
+        <QuizTable
+          listQuizzes={listQuizzes}
+          handleClickBtnUpdateQuiz={handleClickBtnUpdateQuiz}
+          handleClickBtnDeleteQuiz={handleClickBtnDeleteQuiz}
+        />
+      </div>
+      <ModalUpdateQuiz
+        show={showModalUpdateQuiz}
+        setShow={setShowModalUpdateQuiz}
+        selectedQuizData={selectedQuizData}
+        resetselectedQuizData={resetselectedQuizData}
+        fetchListQuizzes={fetchListQuizzes}
+      />
+      <ModalDeleteQuiz
+        show={showModalDeleteQuiz}
+        setShow={setShowModalDeleteQuiz}
+        selectedQuizData={selectedQuizData}
+        fetchListQuizzes={fetchListQuizzes}
+      />
     </div>
   );
 };

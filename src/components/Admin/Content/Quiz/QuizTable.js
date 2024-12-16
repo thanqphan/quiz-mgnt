@@ -5,20 +5,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { PiTrash } from "react-icons/pi";
 
 const QuizTable = (props) => {
-  const [listQuizzes, setListQuizzes] = useState([]);
-
-  useEffect(() => {
-    fetchListQuiz();
-  }, []);
-
-  const fetchListQuiz = async () => {
-    let res = await getAllQuiz();
-    if (res && res.EC === 0) {
-      setListQuizzes(res.DT);
-    } else {
-      toast.error(res.EM);
-    }
-  };
+  const { listQuizzes } = props;
 
   return (
     <>
@@ -46,13 +33,17 @@ const QuizTable = (props) => {
                   <td>
                     <button
                       className="btn btn-warning mx-3"
-                      // onClick={()=>{props.handleClickBtnUpdateUser(user)}}
+                      onClick={() => {
+                        props.handleClickBtnUpdateQuiz(quiz);
+                      }}
                     >
                       <BiEditAlt />
                     </button>
                     <button
                       className="btn btn-danger"
-                      // onClick={()=>{props.handleClickBtnDeleteUser(user)}}
+                      onClick={() => {
+                        props.handleClickBtnDeleteQuiz(quiz);
+                      }}
                     >
                       <PiTrash />
                     </button>
