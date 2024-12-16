@@ -22,8 +22,8 @@ const QuizTable = (props) => {
 
   return (
     <>
-      <div className="mt-3">List quizzes</div>
-      <table className="table table-hover table-bordered ">
+      <table className="table table-hover table-bordered caption-top rounded">
+        <caption>List of quizzes</caption>
         <thead>
           <tr>
             <th scope="col">Id</th>
