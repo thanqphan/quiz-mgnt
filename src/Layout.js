@@ -12,6 +12,7 @@ import Signin from "./components/Auth/Register";
 import ListQuiz from "./components/User/ListQuiz";
 import QuizDetails from "./components/User/QuizDetails";
 import QuizManagement from "./components/Admin/Content/Quiz/QuizManagement";
+import QuestionManagement from "./components/Admin/Content/Question/QuestionManagement";
 const NotFound = () => {
   return <div className="alert alert-danger container m-3">Not Found</div>;
 };
@@ -34,6 +35,10 @@ const Layout = () => {
           <Route
             path="quiz-management"
             element={<QuizManagement></QuizManagement>}
+          />
+          <Route
+            path="question-management"
+            element={<QuestionManagement></QuestionManagement>}
           />
         </Route>
         <Route path="/login" element={<Login></Login>} />
