@@ -5,9 +5,15 @@ import { BiListMinus, BiListPlus } from "react-icons/bi";
 import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
+import Lightbox from "react-awesome-lightbox";
 
 const QuestionManagement = () => {
   const [selectedQuiz, setSelectedQuiz] = useState();
+  const [previewImage, setPreviewImage] = useState(false);
+  const [dataPreviewImage, setDataPreviewImage] = useState({
+    title: "",
+    url: "",
+  });
   const [questions, setQuestions] = useState([
     {
       id: uuidv4(),
@@ -129,6 +135,17 @@ const QuestionManagement = () => {
   const handleSubmitQuizQuestion = () => {
     console.log(questions);
   };
+  const handlePreviewImage = (questionId) => {
+    let clonedQuestion = _.cloneDeep(questions);
+    let index = clonedQuestion.findIndex((item) => item.id === questionId);
+    if (index > -1) {
+      setDataPreviewImage({
+        title: clonedQuestion[index].imageName,
+        url: URL.createObjectURL(clonedQuestion[index].imageFile),
+      });
+      setPreviewImage(true);
+    }
+  };
   return (
     <div className="question-container">
       QuestionManagement
@@ -177,7 +194,15 @@ const QuestionManagement = () => {
                           handleOnChangeQuestionFile(question.id, event);
                         }}
                       />
-                      <span>{question.imageName || "No file chosen"}</span>
+                      <span style={{ cursor: "pointer" }}>
+                        {question.imageName ? (
+                          <span onClick={() => handlePreviewImage(question.id)}>
+                            {question.imageName}
+                          </span>
+                        ) : (
+                          "No file chosen"
+                        )}
+                      </span>
                     </div>
                     <div className="btn-add">
                       <span>
@@ -275,6 +300,15 @@ const QuestionManagement = () => {
           )}
         </div>
       </div>
+      {previewImage && (
+        <Lightbox
+          image={dataPreviewImage.url}
+          title={dataPreviewImage.title}
+          onClose={() => {
+            setPreviewImage(false);
+          }}
+        />
+      )}
     </div>
   );
 };
