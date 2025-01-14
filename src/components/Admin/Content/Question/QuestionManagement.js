@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import "./QuestionManagement.scss";
 import { BiListMinus, BiListPlus } from "react-icons/bi";
@@ -6,9 +6,15 @@ import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
+import {
+  getAllQuiz,
+  postCreateNewAnswerForQuestion,
+  postCreateNewQuestionForQuiz,
+} from "../../../../services/apiServices";
+import { toast } from "react-toastify";
 
 const QuestionManagement = () => {
-  const [selectedQuiz, setSelectedQuiz] = useState();
+  const [selectedQuiz, setSelectedQuiz] = useState({});
   const [previewImage, setPreviewImage] = useState(false);
   const [dataPreviewImage, setDataPreviewImage] = useState({
     title: "",
@@ -34,12 +40,24 @@ const QuestionManagement = () => {
       ],
     },
   ]);
+  const [quizList, setQuizList] = useState([]);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  useEffect(() => {
+    fetchListQuizzes();
+  }, []);
+
+  const fetchListQuizzes = async () => {
+    let res = await getAllQuiz();
+    if (res && res.EC === 0) {
+      let newQuizList = res.DT.map((item) => {
+        return { value: item.id, label: `${item.id}-${item.description}` };
+      });
+      setQuizList(newQuizList);
+    } else {
+      toast.error(res.EM);
+    }
+  };
+  console.log("list quiz", quizList);
 
   const handleAddRemoveQuestion = (type, id) => {
     if (type === "ADD") {
@@ -132,8 +150,27 @@ const QuestionManagement = () => {
       setQuestions(clonedQuestion);
     }
   };
-  const handleSubmitQuizQuestion = () => {
-    console.log(questions);
+  const handleSubmitQuizQuestion = async () => {
+    //submit question
+    await Promise.all(
+      questions.map(async (question) => {
+        const q = await postCreateNewQuestionForQuiz(
+          +selectedQuiz.value,
+          question.description,
+          question.imageFile
+        );
+
+        await Promise.all(
+          question.answers.map(async (answer) => {
+            await postCreateNewAnswerForQuestion(
+              answer.description,
+              answer.isCorrect,
+              q.DT.id
+            );
+          })
+        );
+      })
+    );
   };
   const handlePreviewImage = (questionId) => {
     let clonedQuestion = _.cloneDeep(questions);
@@ -153,7 +190,11 @@ const QuestionManagement = () => {
       <div className="add-new-question">
         <div className="col-md-6 form-control">
           <label>Select Quiz</label>
-          <Select options={options} />
+          <Select
+            options={quizList}
+            onChange={setSelectedQuiz}
+            defaultValue={selectedQuiz}
+          />
         </div>
         <div className="form-control">
           <label>Add new question</label>
