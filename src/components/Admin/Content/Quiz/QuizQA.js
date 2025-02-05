@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Select from "react-select";
-import "./QuestionManagement.scss";
+import "./QuizQA.scss";
 import { BiListMinus, BiListPlus } from "react-icons/bi";
 import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
 import { v4 as uuidv4 } from "uuid";
@@ -13,7 +13,7 @@ import {
 } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
 
-const QuestionManagement = () => {
+const QuizQA = () => {
   const [selectedQuiz, setSelectedQuiz] = useState({});
   const [previewImage, setPreviewImage] = useState(false);
   const [dataPreviewImage, setDataPreviewImage] = useState({
@@ -225,8 +225,6 @@ const QuestionManagement = () => {
   };
   return (
     <div className="question-container">
-      QuestionManagement
-      <div className="title">Question management</div>
       <div className="add-new-question">
         <div className="col-md-6 form-control">
           <label>Select Quiz</label>
@@ -394,4 +392,4 @@ const QuestionManagement = () => {
   );
 };
 
-export default QuestionManagement;
+export default QuizQA;
