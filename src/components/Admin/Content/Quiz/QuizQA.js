@@ -8,6 +8,7 @@ import _ from "lodash";
 import Lightbox from "react-awesome-lightbox";
 import {
   getAllQuiz,
+  getQuizWithQnA,
   postCreateNewAnswerForQuestion,
   postCreateNewQuestionForQuiz,
 } from "../../../../services/apiServices";
@@ -46,7 +47,52 @@ const QuizQA = () => {
   useEffect(() => {
     fetchListQuizzes();
   }, []);
+  useEffect(() => {
+    fetchQuizWithQnA();
+    if (selectedQuiz && selectedQuiz.value) {
+      fetchQuizWithQnA();
+    }
+  }, [selectedQuiz]);
 
+  // return a promise that resolves with a File instance
+  function urltoFile(url, filename, mimeType) {
+    if (url.startsWith("data:")) {
+      var arr = url.split(","),
+        mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[arr.length - 1]),
+        n = bstr.length,
+        u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      var file = new File([u8arr], filename, { type: mime || mimeType });
+      return Promise.resolve(file);
+    }
+    return fetch(url)
+      .then((res) => res.arrayBuffer())
+      .then((buf) => new File([buf], filename, { type: mimeType }));
+  }
+
+  const fetchQuizWithQnA = async () => {
+    let res = await getQuizWithQnA(selectedQuiz.value);
+    if (res && res.EC === 0) {
+      //convert base64 to file object
+      let listQA = [];
+      for (let i = 0; i < res.DT.qa.length; i++) {
+        let q = res.DT.qa[i];
+        if (q.imageFile) {
+          q.imageName = `Question-${q.id}.png`;
+          q.imageFile = await urltoFile(
+            `data:image/png;base64,${q.imageFile}`,
+            `Question-${q.id}.png`,
+            "image/png"
+          );
+          listQA.push(q);
+        }
+      }
+      setQuestions(listQA);
+    }
+  };
   const fetchListQuizzes = async () => {
     let res = await getAllQuiz();
     if (res && res.EC === 0) {
@@ -58,8 +104,6 @@ const QuizQA = () => {
       toast.error(res.EM);
     }
   };
-  // console.log("list quiz", quizList);
-
   const handleAddRemoveQuestion = (type, id) => {
     if (type === "ADD") {
       let newQuestion = {
