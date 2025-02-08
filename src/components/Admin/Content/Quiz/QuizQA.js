@@ -11,6 +11,7 @@ import {
   getQuizWithQnA,
   postCreateNewAnswerForQuestion,
   postCreateNewQuestionForQuiz,
+  postUpsertQnA,
 } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
 
@@ -87,8 +88,8 @@ const QuizQA = () => {
             `Question-${q.id}.png`,
             "image/png"
           );
-          listQA.push(q);
         }
+        listQA.push(q);
       }
       setQuestions(listQA);
     }
@@ -238,24 +239,30 @@ const QuizQA = () => {
       return;
     }
 
-    for (const question of questions) {
-      const q = await postCreateNewQuestionForQuiz(
-        +selectedQuiz.value,
-        question.description,
-        question.imageFile
-      );
-
-      for (const answer of question.answers) {
-        await postCreateNewAnswerForQuestion(
-          answer.description,
-          answer.isCorrect,
-          q.DT.id
-        );
+    let questionClone = _.cloneDeep(questions);
+    for (let i = 0; i < questionClone.length; i++) {
+      if (questionClone[i].imageFile) {
+        questionClone[i].imageFile = await toBase64(questionClone[i].imageFile);
       }
     }
-    toast.success(`Created a new question for Quiz ${selectedQuiz.value}`);
-    setQuestions(initQuestions);
+
+    let res = await postUpsertQnA({
+      quizId: selectedQuiz.value,
+      questions: questionClone,
+    });
+
+    if (res && res.EC === 0) {
+      toast.success(res.EM);
+      fetchQuizWithQnA();
+    }
   };
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
   const handlePreviewImage = (questionId) => {
     let clonedQuestion = _.cloneDeep(questions);
     let index = clonedQuestion.findIndex((item) => item.id === questionId);
