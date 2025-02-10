@@ -1,8 +1,16 @@
 import _ from "lodash";
 import "./QuizDetails.scss";
+import { useState } from "react";
+import Lightbox from "react-awesome-lightbox";
 
 const Question = (props) => {
   const { data, index } = props;
+  const [previewImage, setPreviewImage] = useState(false);
+  const [dataPreviewImage, setDataPreviewImage] = useState({
+    title: "",
+    url: "",
+  });
+
   const handleCheckCheckBox = (event, aId, qId) => {
     props.handleCheckBox(aId, qId);
   };
@@ -14,7 +22,22 @@ const Question = (props) => {
     <>
       {data.image ? (
         <div className="question-image">
-          <img src={`data:image/jpeg;base64,${data.image}`} />
+          <img
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setPreviewImage(true);
+            }}
+            src={`data:image/jpeg;base64,${data.image}`}
+          />
+          {previewImage && (
+            <Lightbox
+              image={`data:image/jpeg;base64,${data.image}`}
+              title={"Question image preview"}
+              onClose={() => {
+                setPreviewImage(false);
+              }}
+            />
+          )}
         </div>
       ) : (
         <div className="question-image"></div>
