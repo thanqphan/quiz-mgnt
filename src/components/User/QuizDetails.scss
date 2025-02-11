@@ -75,6 +75,13 @@
                 &:hover{
                     background-color: #6b9ad8;
                 }
+
+                &.selected{
+                    background-color: rgb(209, 96, 96);
+                }
+                &.clicked{
+                    background-color: #bab5b5;
+                }
             }
         }
     }
