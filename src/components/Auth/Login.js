@@ -31,8 +31,14 @@ const Login = (props) => {
   const handleForgotPassword = () => {
     navigate("/forgot-password");
   };
-  const handleBtnRegistor = () => {
+  const handleBtnRegister = () => {
     navigate("/register");
+  };
+  const handleOnKeyDown = (event) => {
+    //keyCode 13 means Enter key
+    if (event && event.keyCode === 13) {
+      handleLogin();
+    }
   };
   return (
     <div className="login-container">
@@ -41,7 +47,7 @@ const Login = (props) => {
         <button
           className="btn btn-sign-in"
           onClick={() => {
-            handleBtnRegistor();
+            handleBtnRegister();
           }}
         >
           Sign in
@@ -71,6 +77,9 @@ const Login = (props) => {
             value={password}
             onChange={(event) => {
               setPassword(event.target.value);
+            }}
+            onKeyDown={(event) => {
+              handleOnKeyDown(event);
             }}
           ></input>
         </div>
