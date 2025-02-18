@@ -14,12 +14,14 @@ import QuizDetails from "./components/User/QuizDetails";
 import QuizManagement from "./components/Admin/Content/Quiz/QuizManagement";
 import QuestionManagement from "./components/Admin/Content/Question/QuestionManagement";
 import PrivateRoute from "./routes/PrivateRoute";
+import { Suspense } from "react";
+
 const NotFound = () => {
   return <div className="alert alert-danger container m-3">Not Found</div>;
 };
 const Layout = () => {
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         {/* homepage path="/" */}
         <Route path="/" element={<App></App>}>
@@ -73,7 +75,7 @@ const Layout = () => {
         pauseOnHover
         theme="light"
       />
-    </>
+    </Suspense>
   );
 };
 
