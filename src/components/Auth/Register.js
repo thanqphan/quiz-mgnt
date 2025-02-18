@@ -3,6 +3,7 @@ import "./Login.scss";
 import { useNavigate } from "react-router-dom";
 import { postRegister } from "../../services/apiServices";
 import { toast } from "react-toastify";
+import Language from "../Header/Language";
 
 const Register = (props) => {
   const [email, setEmail] = useState("");
@@ -53,6 +54,7 @@ const Register = (props) => {
         >
           Log in
         </button>
+        <Language />
       </div>
       <div className="login-title col-4 mx-auto">React tutorial</div>
       <div className="login-welcome col-4 mx-auto">
