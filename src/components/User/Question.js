@@ -1,7 +1,7 @@
 import _ from "lodash";
 import "./QuizDetails.scss";
 import { useState } from "react";
-import Lightbox from "react-awesome-lightbox";
+import Lightbox from "yet-another-react-lightbox";
 
 const Question = (props) => {
   const { data, index } = props;
@@ -31,11 +31,9 @@ const Question = (props) => {
           />
           {previewImage && (
             <Lightbox
-              image={`data:image/jpeg;base64,${data.image}`}
-              title={"Question image preview"}
-              onClose={() => {
-                setPreviewImage(false);
-              }}
+              open={previewImage}
+              close={() => setPreviewImage(false)}
+              slides={[{ src: `data:image/jpeg;base64,${data.image}` }]}
             />
           )}
         </div>

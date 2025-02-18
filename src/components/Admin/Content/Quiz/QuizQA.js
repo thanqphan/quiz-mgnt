@@ -5,7 +5,6 @@ import { BiListMinus, BiListPlus } from "react-icons/bi";
 import { FiPlusSquare, FiMinusSquare } from "react-icons/fi";
 import { v4 as uuidv4 } from "uuid";
 import _ from "lodash";
-import Lightbox from "react-awesome-lightbox";
 import {
   getAllQuiz,
   getQuizWithQnA,
@@ -14,6 +13,7 @@ import {
   postUpsertQnA,
 } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
+import Lightbox from "yet-another-react-lightbox";
 
 const QuizQA = () => {
   const [selectedQuiz, setSelectedQuiz] = useState({});
@@ -432,11 +432,9 @@ const QuizQA = () => {
       </div>
       {previewImage && (
         <Lightbox
-          image={dataPreviewImage.url}
-          title={dataPreviewImage.title}
-          onClose={() => {
-            setPreviewImage(false);
-          }}
+          open={previewImage}
+          close={() => setPreviewImage(false)}
+          slides={[{ src: dataPreviewImage.url }]}
         />
       )}
     </div>
