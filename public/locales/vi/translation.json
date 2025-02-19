@@ -5,5 +5,10 @@
       "desc": "Đến với chúng tôi, là lựa chọn đúng đắn của bạn",
       "startbtn": "Bắt đầu bài Quiz",
       "loginbtn": "Bắt đầu ngay - Miễn phí"
+    },
+    "header":{
+      "home":"Trang chủ",
+      "user":"Danh sách bài Quiz",
+      "quiz":"Làm bài Quiz"
     }
 }
