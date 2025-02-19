@@ -1,26 +1,37 @@
 .dashboard-container{
     padding: 15px;
     .title{
-        font-size: 20px;;
+        font-size: 20px;
+        margin-bottom: 10px;
     }
     .content{
         display: flex;
+        gap:5px;
         .c-left{
             width: 50%;
             display: flex;
             flex-wrap: wrap;
+            gap: 20px;
             .l-card{
-                width: 50%;
+                width: calc(50% - 10px);
                 height: 150px;
                 border: 1px solid #ccc;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                border-radius: 10px;
+                flex-direction: column;
+                .card-name{
+
+                }
+                .card-count{
+                    font-size: 25px;;
+                }
             }
         }
         .c-right{
             width: 50%;
-
+            height: 350px;
         }
     }
 }
