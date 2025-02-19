@@ -3,7 +3,6 @@ import User from "./components/User/User";
 import Admin from "./components/Admin/Admin";
 import HomePage from "./components/Home/HomePage";
 import UserManagement from "./components/Admin/Content/UserManagement";
-import DashBroad from "./components/Admin/Content/DashBroad";
 import Login from "./components/Auth/Login";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -15,6 +14,7 @@ import QuizManagement from "./components/Admin/Content/Quiz/QuizManagement";
 import QuestionManagement from "./components/Admin/Content/Question/QuestionManagement";
 import PrivateRoute from "./routes/PrivateRoute";
 import { Suspense } from "react";
+import DashBoard from "./components/Admin/Content/DashBoard";
 
 const NotFound = () => {
   return <div className="alert alert-danger container m-3">Not Found</div>;
@@ -44,7 +44,7 @@ const Layout = () => {
             </PrivateRoute>
           }
         >
-          <Route index element={<DashBroad></DashBroad>} />
+          <Route index element={<DashBoard></DashBoard>} />
           <Route
             path="user-management"
             element={<UserManagement></UserManagement>}
