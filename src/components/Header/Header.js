@@ -8,12 +8,14 @@ import { postLogOut } from "../../services/apiServices";
 import { toast } from "react-toastify";
 import { doLogOut } from "../../redux/action/userAction";
 import Language from "./Language";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const isAuthenticated = useSelector((state) => state.user?.isAuthenticated);
   const account = useSelector((state) => state.user?.account);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const handleBtnLogin = () => {
     navigate("/login");
@@ -36,32 +38,32 @@ const Header = () => {
       <Container>
         {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
         <NavLink to="/" className="navbar-brand">
-          React Bootstrap
+          React Tutorial
         </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {/* =event.preventDefault */}
             <NavLink to="/" className="nav-link">
-              Home
+              {t("header.home")}
             </NavLink>
             <NavLink to="/users" className="nav-link">
-              User
+              {t("header.user")}
             </NavLink>
             <NavLink to="/admins" className="nav-link">
-              Admin
+              {t("header.admin")}
             </NavLink>
           </Nav>
           <Nav>
             {isAuthenticated ? (
-              <NavDropdown title="Settings" id="basic-nav-dropdown">
-                <NavDropdown.Item>Profile</NavDropdown.Item>
+              <NavDropdown title={t("header.setting")} id="basic-nav-dropdown">
+                <NavDropdown.Item> {t("header.profile")}</NavDropdown.Item>
                 <NavDropdown.Item
                   onClick={() => {
                     handleLogout();
                   }}
                 >
-                  Log out
+                  {t("header.log-out")}
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
@@ -72,7 +74,7 @@ const Header = () => {
                     handleBtnLogin();
                   }}
                 >
-                  Log in
+                  {t("header.login")}
                 </button>
                 <button
                   className="btn btn-sign-up"
@@ -80,7 +82,7 @@ const Header = () => {
                     handleBtnRegister();
                   }}
                 >
-                  Register
+                  {t("header.register")}
                 </button>
               </>
             )}

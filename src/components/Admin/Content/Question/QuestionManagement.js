@@ -12,6 +12,7 @@ import {
 } from "../../../../services/apiServices";
 import { toast } from "react-toastify";
 import Lightbox from "yet-another-react-lightbox";
+import { useTranslation } from "react-i18next";
 
 const QuestionManagement = () => {
   const [selectedQuiz, setSelectedQuiz] = useState({});
@@ -42,6 +43,7 @@ const QuestionManagement = () => {
   ];
   const [questions, setQuestions] = useState(initQuestions);
   const [quizList, setQuizList] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetchListQuizzes();
@@ -225,11 +227,11 @@ const QuestionManagement = () => {
   };
   return (
     <div className="question-container">
-      QuestionManagement
-      <div className="title">Question management</div>
+      {t("admin.question-mgnt.container")}
+      <div className="title"> {t("admin.question-mgnt.title")}</div>
       <div className="add-new-question">
         <div className="col-md-6 form-control">
-          <label>Select Quiz</label>
+          <label>{t("admin.question-mgnt.select")}</label>
           <Select
             options={quizList}
             onChange={setSelectedQuiz}
@@ -237,7 +239,7 @@ const QuestionManagement = () => {
           />
         </div>
         <div className="form-control">
-          <label>Add new question</label>
+          <label>{t("admin.question-mgnt.add")}</label>
           {questions &&
             questions.length > 0 &&
             questions.map((question, index) => {
@@ -258,14 +260,16 @@ const QuestionManagement = () => {
                         }}
                         value={question.description}
                       />
-                      <label>Question's Description {index + 1}</label>
+                      <label>
+                        {t("admin.question-mgnt.desc")} {index + 1}
+                      </label>
                     </div>
                     <div className="upload-image">
                       <label
                         htmlFor={`${question.id}`}
                         className="label-upload"
                       >
-                        Upload Image
+                        {t("admin.question-mgnt.upload-image")}
                       </label>
                       <input
                         id={question.id}
