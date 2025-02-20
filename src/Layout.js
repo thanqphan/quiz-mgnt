@@ -15,6 +15,10 @@ import QuestionManagement from "./components/Admin/Content/Question/QuestionMana
 import PrivateRoute from "./routes/PrivateRoute";
 import { Suspense } from "react";
 import DashBoard from "./components/Admin/Content/DashBoard";
+import UserInfor from "./components/Header/UserInfor";
+import ChangePassword from "./components/Header/ChangePassword";
+import UserHistory from "./components/Header/UserQuizHistory";
+import UserQuizHistory from "./components/Header/UserQuizHistory";
 
 const NotFound = () => {
   return <div className="alert alert-danger container m-3">Not Found</div>;

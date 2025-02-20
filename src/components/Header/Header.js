@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import { doLogOut } from "../../redux/action/userAction";
 import Language from "./Language";
 import { useTranslation } from "react-i18next";
+import Profile from "./Profile";
+import { useState } from "react";
 
 const Header = () => {
   const isAuthenticated = useSelector((state) => state.user?.isAuthenticated);
@@ -16,6 +18,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const [showUserProfile, setShowUserProfile] = useState(false);
 
   const handleBtnLogin = () => {
     navigate("/login");
@@ -34,63 +37,76 @@ const Header = () => {
     }
   };
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container>
-        {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
-        <NavLink to="/" className="navbar-brand">
-          React Tutorial
-        </NavLink>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            {/* =event.preventDefault */}
-            <NavLink to="/" className="nav-link">
-              {t("header.home")}
-            </NavLink>
-            <NavLink to="/users" className="nav-link">
-              {t("header.user")}
-            </NavLink>
-            <NavLink to="/admins" className="nav-link">
-              {t("header.admin")}
-            </NavLink>
-          </Nav>
-          <Nav>
-            {isAuthenticated ? (
-              <NavDropdown title={t("header.setting")} id="basic-nav-dropdown">
-                <NavDropdown.Item> {t("header.profile")}</NavDropdown.Item>
-                <NavDropdown.Item
-                  onClick={() => {
-                    handleLogout();
-                  }}
+    <>
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container>
+          {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
+          <NavLink to="/" className="navbar-brand">
+            React Tutorial
+          </NavLink>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              {/* =event.preventDefault */}
+              <NavLink to="/" className="nav-link">
+                {t("header.home")}
+              </NavLink>
+              <NavLink to="/users" className="nav-link">
+                {t("header.user")}
+              </NavLink>
+              <NavLink to="/admins" className="nav-link">
+                {t("header.admin")}
+              </NavLink>
+            </Nav>
+            <Nav>
+              {isAuthenticated ? (
+                <NavDropdown
+                  title={t("header.setting")}
+                  id="basic-nav-dropdown"
                 >
-                  {t("header.log-out")}
-                </NavDropdown.Item>
-              </NavDropdown>
-            ) : (
-              <>
-                <button
-                  className="btn btn-login"
-                  onClick={() => {
-                    handleBtnLogin();
-                  }}
-                >
-                  {t("header.login")}
-                </button>
-                <button
-                  className="btn btn-sign-up"
-                  onClick={() => {
-                    handleBtnRegister();
-                  }}
-                >
-                  {t("header.register")}
-                </button>
-              </>
-            )}
-            <Language />
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      setShowUserProfile(true);
+                    }}
+                  >
+                    {" "}
+                    {t("header.profile")}
+                  </NavDropdown.Item>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    {t("header.log-out")}
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <>
+                  <button
+                    className="btn btn-login"
+                    onClick={() => {
+                      handleBtnLogin();
+                    }}
+                  >
+                    {t("header.login")}
+                  </button>
+                  <button
+                    className="btn btn-sign-up"
+                    onClick={() => {
+                      handleBtnRegister();
+                    }}
+                  >
+                    {t("header.register")}
+                  </button>
+                </>
+              )}
+              <Language />
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+      <Profile show={showUserProfile} setShow={setShowUserProfile} />
+    </>
   );
 };
 
