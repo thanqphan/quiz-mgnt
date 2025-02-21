@@ -4,12 +4,27 @@ import { useState } from "react";
 import Lightbox from "yet-another-react-lightbox";
 
 const Question = (props) => {
-  const { data, index } = props;
+  const { data, index, isFinished, dataResult } = props;
   const [previewImage, setPreviewImage] = useState(false);
-  const [dataPreviewImage, setDataPreviewImage] = useState({
-    title: "",
-    url: "",
-  });
+
+  const getAnswerClass = (answer) => {
+    const questionResult = dataResult?.find(
+      (q) => q.questionId === +data.questionId
+    );
+    if (!questionResult) return "";
+    const correctAnswers = questionResult.systemAnswers || [];
+
+    const isCorrect = correctAnswers.some(
+      (sysAns) => sysAns.id === answer.id && sysAns.correct_answer
+    );
+
+    const isSelected = answer.isSelected;
+    if (isCorrect && isSelected) return "answer-correct";
+    if (!isCorrect && isSelected) return "answer-incorrect";
+    if (isCorrect && !isSelected) return "answer-highlight";
+
+    return "";
+  };
 
   const handleCheckCheckBox = (event, aId, qId) => {
     props.handleCheckBox(aId, qId);
@@ -48,17 +63,21 @@ const Question = (props) => {
           data.answers.length &&
           data.answers.map((answer, index) => {
             return (
-              <div key={`answer-${index}`} className="quiz-answer-child">
+              <div
+                key={`answer-${index}`}
+                className={`quiz-answer-child ${getAnswerClass(answer)}`}
+              >
                 <div className="form-check">
                   <input
                     className="form-check-input"
                     type="checkbox"
                     value=""
-                    id="flexCheckDefault"
+                    id={`answer-${answer.id}`}
                     onChange={(event) => {
                       handleCheckCheckBox(event, answer.id, data.questionId);
                     }}
                     checked={answer.isSelected}
+                    disabled={isFinished}
                   />
                   <label
                     className="form-check-label"

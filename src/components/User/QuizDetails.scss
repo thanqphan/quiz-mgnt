@@ -35,6 +35,16 @@
                     text-align: left;
                     padding-left: 300px;
                 }
+                .answer-correct{
+                    background-color: rgb(98, 226, 98);
+                }
+                .answer-incorrect{
+                    background-color: rgb(236, 117, 117);
+                }
+                .answer-highlight{
+                    background-color: rgb(229, 229, 135);
+                    color: #000000;
+                }
 
             }
         }

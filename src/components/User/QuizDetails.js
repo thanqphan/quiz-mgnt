@@ -17,6 +17,8 @@ const QuizDetails = (props) => {
   const [index, setIndex] = useState(0);
   const [isShowModalResult, setIsShowModalResult] = useState(false);
   const [dataModelResult, setDataModelResult] = useState({});
+  const [isFinished, setIsFinished] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -68,7 +70,8 @@ const QuizDetails = (props) => {
   };
 
   const handleFinishQuiz = async () => {
-    console.log("dataQuiz finished", dataQuiz);
+    setIsFinished(true);
+
     let payload = {
       quizId: +quizId,
       answers: [],
@@ -110,6 +113,8 @@ const QuizDetails = (props) => {
   };
 
   const handleCheckBox = (answerId, questionId) => {
+    if (isFinished) return;
+
     let dataQuizClone = _.cloneDeep(dataQuiz);
     let question = dataQuizClone.find(
       (item) => +item.questionId === +questionId
@@ -156,6 +161,9 @@ const QuizDetails = (props) => {
               data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
               index={index}
               handleCheckBox={handleCheckBox}
+              isFinished={isFinished}
+              showAnswers={showAnswers}
+              dataResult={dataModelResult.quizData}
             />
           </div>
           <div className="quiz-footer">
@@ -177,9 +185,8 @@ const QuizDetails = (props) => {
             </button>
             <button
               className="btn btn-warning"
-              onClick={() => {
-                handleFinishQuiz();
-              }}
+              onClick={handleFinishQuiz}
+              disabled={isFinished}
             >
               Finish
             </button>
@@ -196,6 +203,8 @@ const QuizDetails = (props) => {
           show={isShowModalResult}
           setShow={setIsShowModalResult}
           dataResult={dataModelResult}
+          setShowAnswers={setShowAnswers}
+          setIsFinished={setIsFinished}
         />
       </div>
     </>

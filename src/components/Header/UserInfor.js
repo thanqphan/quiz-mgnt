@@ -70,8 +70,8 @@ const UserInfor = (props) => {
   return (
     <>
       <form>
-        <div className="form-row">
-          <div className="form-group col-md-6">
+        <div className="form-row d-flex ">
+          <div className="form-group col-md-6 me-2">
             <label className="form-label">Email</label>
             <input
               type="email"
