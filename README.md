@@ -41,7 +41,7 @@ A **Quiz Management System** built with **ReactJS** <img src="https://skillicons
 
 ```bash
 # Clone the repository
-git clone [https://github.com/your-username/quiz-management-system.git](https://github.com/thanqphan/quiz-mgnt.git)
+git clone [https://github.com/thanqphan/quiz-mgnt.git]
 
 # Install dependencies
 npm install
