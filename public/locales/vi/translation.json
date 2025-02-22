@@ -1,0 +1,31 @@
+{
+    "homepage": {
+      "title":
+        "Làm thế nào để tự tin hơn khi làm bài kiểm tra trên trang web ?",
+      "desc": "Đến với chúng tôi, là lựa chọn đúng đắn của bạn",
+      "startbtn": "Bắt đầu bài Quiz",
+      "loginbtn": "Bắt đầu ngay - Miễn phí"
+    },
+    "header":{
+      "home":"Trang chủ",
+      "user":"Danh sách bài Quiz",
+      "quiz":"Làm bài Quiz",
+      "profile":"Thông tin của bạn",
+      "log-out":"Đăng xuất",
+      "login":"Đăng nhập",
+      "register":"Đăng ký",
+      "setting":"Cài đặt",
+      "admin":"Admin"
+    },
+    "admin": {
+      "question-mgnt": {
+        "container": "Quản lý Câu hỏi",
+        "title": "Quản lý Câu hỏi",
+        "select": "Chọn Bài kiểm tra",
+        "add": "Thêm câu hỏi mới",
+        "desc": "Mô tả Câu hỏi",
+        "upload-image": "Tải lên Hình ảnh"
+      }
+    }
+
+}

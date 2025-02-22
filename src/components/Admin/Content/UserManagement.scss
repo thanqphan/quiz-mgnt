@@ -1,0 +1,49 @@
+.user-management-container{
+    padding: 10px;
+    .user-management-content{
+        .btn-add-user{
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+        .tbl-users-container{
+        }
+    }
+    .title{
+        font-size: 30px;
+        font-weight: 500;
+    }
+}
+.model-add-user{
+    .img-preview{
+        height: 150px;
+        border: 2px dashed rgb(45, 89, 150);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(151, 181, 207);
+        margin: 10px 0;
+
+        img{
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    .label-upload{
+        gap: 10px;
+        display: flex;
+        align-items: center;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background: #f1efef;
+        width: fit-content;
+        cursor: pointer;
+        margin: 10px 0;
+
+        &:hover{
+            background-color: #8d86869e;
+        }
+    }
+}

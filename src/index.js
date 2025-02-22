@@ -1,17 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import Layout from "./Layout";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { store, persistor } from "./redux/store";
+import i18n from "./utils/i18n";
+
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-perfect-scrollbar/dist/css/styles.css";
+import "nprogress/nprogress.css";
+import "yet-another-react-lightbox/styles.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-    {/* <React.StrictMode> */}
-    <App />
-    {/* </React.StrictMode> */}
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <Layout />
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 );
 

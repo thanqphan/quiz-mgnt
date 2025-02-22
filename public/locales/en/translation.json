@@ -1,0 +1,29 @@
+{
+      "homepage": {
+        "title": "How to be more confident when doing tests on the website ?",
+        "desc": "Come to us, is your right choice",
+        "startbtn": "Doing a Quiz",
+        "loginbtn": "Get started-it's free"
+      },
+      "header":{
+        "home":"Home",
+        "user":"User Assignment",
+        "quiz":"Quiz Assignment",
+        "profile":"Profile",
+        "log-out":"Log out",
+        "login":"Login",
+        "register":"Register",
+        "setting":"Setting",
+        "admin":"Admin"
+      },
+      "admin":{
+        "question-mgnt":{
+          "container": "Question Management",
+          "title":"Question Management",
+          "select":"Select Quiz",
+          "add":"Add new question",
+          "desc":"Question's Description",
+          "upload-image":"Upload Image"
+        }
+      }
+    }

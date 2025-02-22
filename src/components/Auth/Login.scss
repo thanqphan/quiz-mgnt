@@ -1,0 +1,67 @@
+.login-container{
+    .login-header{
+        margin: 10px 15px;
+        height: 35px;
+        gap: 10px;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        .btn-sign-in{
+            border: 1px solid black;
+            border-radius: 10px;
+            border-color: black;
+            margin-right: 15px;
+        }
+    }
+    .login-title{
+        font-size: 30px;
+        text-align: center;
+    }
+    .login-welcome{
+        text-align: center;
+    }
+    .login-content-form{
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        .loading-icon{
+            margin: 10px;
+            top: 2px;
+            animation: spin 1s infinite linear;
+        }
+        
+        @keyframes spin {
+            from {
+                transform: scale(1) rotate(0deg);
+            }
+            to {
+                transform: scale(1) rotate(360deg);
+            }
+        }
+    
+        .forgot-password{
+            text-align: right;
+            text-decoration: underline
+        }
+        .btn-submit{
+            width: 100%;
+            border: 1px solid;
+            background: #343131;
+            color: white;
+            padding: 0 15px;
+            border-radius: 10px;
+            height: 40px;
+            &:hover{
+                background: black !important;
+            }
+
+            &:disabled{
+                border: 1px solid #999999;
+                background-color: #cccccc;
+                color: #666666;
+                cursor: wait;
+            }
+        }
+        
+    }
+}
